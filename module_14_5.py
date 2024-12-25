@@ -31,7 +31,7 @@ class RegistrationState(StatesGroup):
     username = State()
     email = State()
     age = State()
-    balance = State()  # Добавляем баланс по умолчанию
+    balance = State() 
 
 
 @dp.message_handler(commands=['start'])
@@ -72,19 +72,16 @@ async def set_age(message: types.Message, state: FSMContext):
     age = message.text
     await state.update_data(age=age)
 
-    # Получаем все данные из состояния
     data = await state.get_data()
     username = data["username"]
     email = data["email"]
     age = data["age"]
-    balance = 1000  # По умолчанию баланс 1000
+    balance = 1000  
 
-    # Добавляем пользователя в базу данных
     add_user(username, email, age, balance)
 
     await message.answer(f"Вы успешно зарегистрированы!\nИмя пользователя: {username}\nEmail: {email}\nВозраст: {age}")
 
-    # Завершаем процесс регистрации
     await state.finish()
 
 
@@ -118,5 +115,5 @@ async def all_messages(message: types.Message):
 
 
 if __name__ == '__main__':
-    initiate_db()  # Инициализируем БД перед запуском бота
+    initiate_db() 
     executor.start_polling(dp, skip_updates=True)
