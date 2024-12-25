@@ -33,7 +33,7 @@ def add_user(username, email, age):
 
 
 def is_included(username):
-    connection = sqlite3.connect("prodact.db")
+    connection = sqlite3.connect("product.db")
     cursor = connection.cursor()
 
     cursor.execute("SELECT 1 FROM Users WHERE username = ?", (username,))
