@@ -6,7 +6,7 @@ import crud_functions
 from crud_functions import initiate_db, add_user, is_included
 import asyncio
 
-api = '7996549815:AAGcjpxbCHaHkcgDHgsizuMZcEiSb7hZzt8'
+api = ''
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -49,7 +49,7 @@ async def sing_up(message: types.Message):
 
 
 @dp.message_handler(state=RegistrationState.username)
-async def set_username(message: types.Message, state: FSMContext):
+async def set_username(message, state):
     username = message.text
     if is_included(username):
         await message.answer("Пользователь существует, введите другое имя.")
@@ -60,7 +60,7 @@ async def set_username(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=RegistrationState.email)
-async def set_email(message: types.Message, state: FSMContext):
+async def set_email(message, state):
     email = message.text
     await state.update_data(email=email)
     await message.answer("Введите свой возраст:")
@@ -68,7 +68,7 @@ async def set_email(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=RegistrationState.age)
-async def set_age(message: types.Message, state: FSMContext):
+async def set_age(message, state):
     age = message.text
     await state.update_data(age=age)
 
@@ -86,7 +86,7 @@ async def set_age(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(text=['Купить'])
-async def get_buying_list(message: types.Message):
+async def get_buying_list(message):
     products = get_all_products()
 
     for product in products:
@@ -110,7 +110,7 @@ async def send_confirm_message(call):
 
 
 @dp.message_handler()
-async def all_messages(message: types.Message):
+async def all_messages(message):
     await message.answer('Введите команду /start, чтобы начать общение.')
 
 
